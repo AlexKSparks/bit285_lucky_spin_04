@@ -20,9 +20,9 @@ namespace LuckySpin.Controllers
         }
 
         [HttpPost]
-        public IActionResult Index(int num)
+        public IActionResult Index(Player one)
         {
-            return RedirectToAction("SpinIt", new { luck = 3 });
+            return RedirectToAction("SpinIt", one);
         }
 
         /***
@@ -31,15 +31,15 @@ namespace LuckySpin.Controllers
                
         Random random = new Random() ; 
 
-        public IActionResult SpinIt(int luck)
+        public IActionResult SpinIt(Player one)
         {
             //Load up a Spin object with data
             Spin spin = new Spin();
-            spin.Luck = luck;
+            spin.Luck = one.Number;
             spin.A = random.Next(1, 10);
             spin.B = random.Next(1, 10);
             spin.C = random.Next(1, 10);
-
+            ViewBag.Name = one.Name;
             // Test to see if a winner
             if (spin.A == spin.Luck || spin.B == spin.Luck || spin.C == spin.Luck)
                 spin.Display = "block";
